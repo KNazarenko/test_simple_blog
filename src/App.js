@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import Header from './components/layout/Header';
+import Posts from './components/posts/Posts';
+import CurrentPost from './components/pages/CurrentPost';
+import Add from './components/pages/Add';
+import store from './store';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Provider store={store}>
+        <Router>
+          <div>
+            <Header />
+            <div className="container col-md-8 col-xl-6">
+              <Switch>
+                <Route exact path="/" component={Posts} />
+                <Route exact path="/add" component={Add} />
+                <Route exact path="/post/:id" component={CurrentPost} />
+              </Switch>
+            </div>
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }
